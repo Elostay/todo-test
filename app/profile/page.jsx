@@ -26,8 +26,22 @@ const MyProfile = () => {
   const handleEdit = (task) => {
     router.push(`/update-task?id=${task._id}`);
   };
-  const handleDelete = (task) => {};
- 
+  const handleDelete = async (task) => {
+    const hasConfirmed = confirm("Are you sure you want to delete this task?");
+
+    if (hasConfirmed) {
+      try {
+        await fetch(`/api/task/${task._id.toString()}`, {
+          method: "DELETE",
+        });
+
+        const filteredTasks = tasks.filter((t) => t._id !== task._id);
+        setTasks(filteredTasks);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   return (
     <Profile
@@ -36,7 +50,6 @@ const MyProfile = () => {
       data={tasks}
       handleEdit={handleEdit}
       handleDelete={handleDelete}
-      
     />
   );
 };
