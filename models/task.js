@@ -13,6 +13,10 @@ const TaskSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  rate: {
+    type: Number,
+    default: 1,
+  },
 });
 
 const Task = models.Task || model("Task", TaskSchema);

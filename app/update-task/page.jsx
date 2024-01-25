@@ -13,6 +13,7 @@ const EditTask = () => {
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
     task: "",
+    rate: 1,
   });
 
   useEffect(() => {
@@ -21,6 +22,7 @@ const EditTask = () => {
       const data = await response.json();
       setPost({
         task: data.task,
+        rate: data.rate,
       });
     };
 
@@ -38,6 +40,7 @@ const EditTask = () => {
         method: "PATCH",
         body: JSON.stringify({
           task: post.task,
+          rate: post.rate,
         }),
       });
 

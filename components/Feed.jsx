@@ -1,20 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import TodoItem from "./TodoItemFeed";
+import TodoItemFeed from "./TodoItemFeed";
 import FilterButtons from "./FilterButtons";
 
-const TodoList = ({ data, handleCardClick }) => {
+const TodoList = ({ data }) => {
   return (
     <>
-      {/* <FilterButtons data={data} /> */}
       <div className="task_layout">
         {data.map((task) => (
-          <TodoItem
-            key={task._id}
-            task={task}
-            handleCardClick={handleCardClick}
-          />
+          <TodoItemFeed key={task._id} task={task} rate={task.rate} />
         ))}
       </div>
     </>
@@ -24,6 +19,8 @@ const TodoList = ({ data, handleCardClick }) => {
 const Feed = () => {
   const [tasks, setTasks] = useState([]);
   const [filteredStatus, setFilteredStatus] = useState([]);
+
+  const [ascending, setAscending] = useState(true);
 
   const [searchText, setSearchText] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
@@ -58,26 +55,39 @@ const Feed = () => {
     );
   };
 
-  const handleCardClick = () => {
-    // redirect to profile
-  };
   const handleFilterBtn = async (e) => {
     const nameBtn = e.target.name;
 
     switch (nameBtn) {
       case "all":
+        setSearchText("");
         await fetchTasks();
         setFilteredStatus(tasks);
         break;
       case "completed":
+        setSearchText("");
         await fetchTasks();
         const completedTasks = tasks.filter((task) => task.done === true);
         setFilteredStatus(completedTasks);
         break;
       case "active":
+        setSearchText("");
         await fetchTasks();
         const activeTasks = tasks.filter((task) => task.done === false);
         setFilteredStatus(activeTasks);
+        break;
+      case "sort":
+        searchText !== "" && ascending
+          ? searchedResults.sort((a, b) => a.rate - b.rate)
+          : searchedResults.sort((a, b) => b.rate - a.rate);
+        ascending && tasks.length !== 0
+          ? tasks.sort((a, b) => a.rate - b.rate)
+          : tasks.sort((a, b) => b.rate - a.rate);
+        ascending && filteredStatus.length !== 0
+          ? filteredStatus.sort((a, b) => a.rate - b.rate)
+          : filteredStatus.sort((a, b) => b.rate - a.rate);
+
+        setAscending((prev) => !prev);
         break;
       default:
         break;
@@ -99,12 +109,9 @@ const Feed = () => {
       <FilterButtons handleFilterBtn={handleFilterBtn} />
 
       {searchText ? (
-        <TodoList data={searchedResults} handleCardClick={handleCardClick} />
+        <TodoList data={searchedResults} />
       ) : (
-        <TodoList
-          data={filteredStatus.length === 0 ? tasks : filteredStatus}
-          handleCardClick={handleCardClick}
-        />
+        <TodoList data={filteredStatus.length === 0 ? tasks : filteredStatus} />
       )}
     </section>
   );

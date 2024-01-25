@@ -14,6 +14,7 @@ const CreateTask = () => {
   const [post, setPost] = useState({
     task: "",
     done: false,
+    rate: 1,
   });
   const createTask = async (e) => {
     e.preventDefault();
@@ -26,6 +27,7 @@ const CreateTask = () => {
           task: post.task,
           userId: session?.user.id,
           done: post.done,
+          rate: post.rate,
         }),
       });
 

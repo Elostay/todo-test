@@ -2,13 +2,16 @@ import { connectToDB } from "@utils/database";
 import Task from "@models/task";
 
 export const POST = async (req) => {
-  const { userId, task, done } = await req.json();
+  const { userId, task, done, rate } = await req.json();
 
-  console.log(done);
-  console.log(req);
   try {
     await connectToDB();
-    const newTask = new Task({ creator: userId, task, done: done || false });
+    const newTask = new Task({
+      creator: userId,
+      task,
+      done: done || false,
+      rate,
+    });
 
     await newTask.save();
 

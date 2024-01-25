@@ -15,7 +15,7 @@ export const GET = async (req, { params }) => {
 };
 
 export const PATCH = async (req, { params }) => {
-  const { task } = await req.json();
+  const { task, rate } = await req.json();
 
   try {
     await connectToDB();
@@ -27,6 +27,7 @@ export const PATCH = async (req, { params }) => {
     }
 
     existingTask.task = task;
+    existingTask.rate = rate;
 
     await existingTask.save();
 
