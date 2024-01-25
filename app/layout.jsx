@@ -6,6 +6,7 @@ export const metadata = {
   title: "Todo-list",
   description: "Track your tasks",
 };
+
 const RootLayout = ({ children }) => {
   return (
     <html lang="en">
