@@ -81,8 +81,6 @@ const Form = ({ type, task, setTask, submitting, handleSubmit }) => {
               className={makeOptionClassName(idx, color)}
               value={value}
               onClick={(e) => {
-                setActiveBtn(Number(e.target.value));
-
                 setActiveBtn(idx);
                 return setTask({ ...task, rate: Number(e.target.value) });
               }}
