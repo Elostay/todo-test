@@ -6,7 +6,6 @@ import FilterButtons from "./FilterButtons";
 import { useSession } from "next-auth/react";
 import TodoList from "./TodoList";
 
-
 const Feed = () => {
   const { data: session } = useSession();
 
@@ -14,6 +13,7 @@ const Feed = () => {
   const [filteredStatus, setFilteredStatus] = useState([]);
 
   const [ascending, setAscending] = useState(true);
+  const [activeBtn, setActiveBtn] = useState(0);
 
   const [searchText, setSearchText] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
@@ -48,7 +48,8 @@ const Feed = () => {
     );
   };
 
-  const handleFilterBtn = async (e) => {
+  const handleFilterBtn = async (e, index) => {
+    setActiveBtn(index);
     const nameBtn = e.target.name;
 
     switch (nameBtn) {
@@ -101,7 +102,10 @@ const Feed = () => {
             />
           </form>
 
-          <FilterButtons handleFilterBtn={handleFilterBtn} />
+          <FilterButtons
+            handleFilterBtn={handleFilterBtn}
+            activeBtn={activeBtn}
+          />
 
           {searchText ? (
             <TodoList data={searchedResults} />
@@ -117,4 +121,3 @@ const Feed = () => {
 };
 
 export default Feed;
-// {session?.user && <FilterButtons handleFilterBtn={handleFilterBtn} />}

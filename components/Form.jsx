@@ -5,8 +5,46 @@ import { useState } from "react";
 
 const Form = ({ type, task, setTask, submitting, handleSubmit }) => {
   const [activeBtn, setActiveBtn] = useState(0);
-  // (activeBtn === 1 && "active") || (task.rate === 1 && "active");
 
+  const buttons = [
+    {
+      value: 1,
+      color: "blue-bg_gradient",
+    },
+    {
+      value: 2,
+      color: "blue-yellow-bg_gradient",
+    },
+    {
+      value: 3,
+      color: "yellow-bg_gradient",
+    },
+    {
+      value: 4,
+      color: "yellow-red-bg_gradient",
+    },
+    {
+      value: 5,
+      color: "red-bg_gradient ",
+    },
+  ];
+
+  const makeOptionClassName = (index, color) => {
+    const optionClasses = [
+      "w-10",
+      "h-10",
+      "text-white",
+      "rounded-full",
+      "flex",
+      "items-center",
+      "justify-center",
+      `${color}`,
+    ];
+    if (index === activeBtn) {
+      optionClasses.push("active");
+    }
+    return optionClasses.join(" ");
+  };
   return (
     <section className="w-full max-w-full flex-start flex-col">
       <h1 className="head_text text-left">
@@ -36,76 +74,21 @@ const Form = ({ type, task, setTask, submitting, handleSubmit }) => {
         </label>
 
         <div className="flex gap-3 mt-1 ">
-          <button
-            type="button"
-            className={`w-10 h-10 text-white rounded-full flex items-center justify-center blue-bg_gradient ${
-              (activeBtn === 1 && "active") || (task.rate === 1 && "active")
-            }`}
-            value={1}
-            onClick={(e) => {
-              setActiveBtn(Number(e.target.value));
+          {buttons.map(({ color, value }, idx) => (
+            <button
+              type="button"
+              className={makeOptionClassName(idx, color)}
+              value={value}
+              onClick={(e) => {
+                setActiveBtn(Number(e.target.value));
 
-              return setTask({ ...task, rate: Number(e.target.value) });
-            }}
-          >
-            1
-          </button>
-          <button
-            type="button"
-            className={`w-10 h-10 text-white rounded-full flex items-center justify-center blue-yellow-bg_gradient ${
-              (activeBtn === 2 && "active") || (task.rate === 2 && "active")
-            }`}
-            value={2}
-            onClick={(e) => {
-              setActiveBtn(Number(e.target.value));
-
-              return setTask({ ...task, rate: Number(e.target.value) });
-            }}
-          >
-            2
-          </button>
-          <button
-            type="button"
-            className={`w-10 h-10 text-white rounded-full flex items-center justify-center yellow-bg_gradient ${
-              (activeBtn === 3 && "active") || (task.rate === 3 && "active")
-            }`}
-            value={3}
-            onClick={(e) => {
-              setActiveBtn(Number(e.target.value));
-
-              return setTask({ ...task, rate: Number(e.target.value) });
-            }}
-          >
-            3
-          </button>
-          <button
-            type="button"
-            className={`w-10 h-10 text-white rounded-full flex items-center justify-center yellow-red-bg_gradient ${
-              (activeBtn === 4 && "active") || (task.rate === 4 && "active")
-            }`}
-            value={4}
-            onClick={(e) => {
-              setActiveBtn(Number(e.target.value));
-
-              return setTask({ ...task, rate: Number(e.target.value) });
-            }}
-          >
-            4
-          </button>
-          <button
-            type="button"
-            className={`w-10 h-10 text-white rounded-full flex items-center justify-center red-bg_gradient ${
-              (activeBtn === 5 && "active") || (task.rate === 5 && "active")
-            }`}
-            value={5}
-            onClick={(e) => {
-              setActiveBtn(Number(e.target.value));
-
-              return setTask({ ...task, rate: Number(e.target.value) });
-            }}
-          >
-            5
-          </button>
+                setActiveBtn(idx);
+                return setTask({ ...task, rate: Number(e.target.value) });
+              }}
+            >
+              {value}
+            </button>
+          ))}
         </div>
 
         <div className="flex-end mx-3 mb-5 gap-4">

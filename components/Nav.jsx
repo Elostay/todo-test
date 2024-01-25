@@ -35,7 +35,7 @@ const Nav = () => {
 
       {/*Desktop Navigation */}
       <div className="sm:flex hidden">
-        {session?.user ? (
+        {session?.user && (
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-task" className="black_btn">
               Create New Task
@@ -55,21 +55,21 @@ const Nav = () => {
               />
             </Link>
           </div>
-        ) : (
-          <>
-            {providers &&
-              Object.values(providers).map((provider) => (
-                <button
-                  type="button"
-                  key={provider.name}
-                  onClick={() => signIn(provider.id)}
-                  className="black_btn"
-                >
-                  Sign In Google
-                </button>
-              ))}
-          </>
         )}
+        <>
+          {providers &&
+            !session?.user &&
+            Object.values(providers).map((provider) => (
+              <button
+                type="button"
+                key={provider.name}
+                onClick={() => signIn(provider.id)}
+                className="black_btn"
+              >
+                Sign In Google
+              </button>
+            ))}
+        </>
       </div>
       {/* Mobile Navigation */}
       <div className="sm:hidden flex relative">
