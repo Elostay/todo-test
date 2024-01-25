@@ -76,6 +76,7 @@ const Form = ({ type, task, setTask, submitting, handleSubmit }) => {
         <div className="flex gap-3 mt-1 ">
           {buttons.map(({ color, value }, idx) => (
             <button
+              key={idx}
               type="button"
               className={makeOptionClassName(idx, color)}
               value={value}
