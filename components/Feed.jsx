@@ -1,27 +1,61 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import TodoList from "./TodoList";
+import TodoItem from "./TodoItem";
+// import TodoList from "./TodoList";
+
+const TodoList = ({ data, handleCardClick }) => {
+  return (
+    <div className="mt-16 task_layout">
+      {data.map((task) => (
+        <TodoItem
+          key={task._id}
+          task={task}
+          handleCardClick={handleCardClick}
+        />
+      ))}
+    </div>
+  );
+};
 
 const Feed = () => {
-  const [searchText, setSearchText] = useState("");
   const [tasks, setTasks] = useState([]);
 
-  const handleSearchChange = (e) => {};
+  const [searchText, setSearchText] = useState("");
+  const [searchTimeout, setSearchTimeout] = useState(null);
+  const [searchedResults, setSearchedResults] = useState([]);
+
+  const fetchTasks = async () => {
+    const response = await fetch("/api/task");
+    const data = await response.json();
+
+    setTasks(data);
+  };
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      const response = await fetch("/api/task");
-      const data = await response.json();
-
-      setTasks(data);
-    };
-
     fetchTasks();
   }, []);
 
+  const filterTasks = (searchText) => {
+    const regex = new RegExp(searchText, "i");
+
+    return tasks.filter((item) => regex.test(item.task));
+  };
+
+  const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout);
+    setSearchText(e.target.value);
+
+    setSearchTimeout(
+      setTimeout(() => {
+        const searchResult = filterTasks(e.target.value);
+        setSearchedResults(searchResult);
+      }, 500)
+    );
+  };
+
   return (
-    <section className="todo_list">
+    <section className="feed">
       <form className="relative w-full flex-center">
         <input
           type="text"
@@ -32,8 +66,11 @@ const Feed = () => {
           className="search_input peer"
         />
       </form>
-
-      <TodoList data={tasks} handleCardClick={() => {}} />
+      {searchText ? (
+        <TodoList data={searchedResults} handleCardClick={() => {}} />
+      ) : (
+        <TodoList data={tasks} handleCardClick={() => {}} />
+      )}
     </section>
   );
 };
