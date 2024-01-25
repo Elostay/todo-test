@@ -1,21 +1,6 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
-import { usePathname, useRouter } from "next/navigation";
 
-const TodoItem = ({
-  task,
-  handleCardClick,
-  handleEdit,
-  handleDelete,
-  taskIdDone,
-}) => {
-  const { data: session } = useSession();
-  const pathName = usePathname();
-  const router = useRouter();
-
+const TodoItem = ({ task }) => {
   return (
     <div className="task_card">
       <div className="flex justify-between items-start gap-5">

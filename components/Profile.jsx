@@ -1,4 +1,3 @@
-import TodoItem from "./TodoItem";
 import TodoItemProfile from "./TodoItemProfile";
 
 const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {

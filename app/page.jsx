@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <section className="w-full flex-center flex-col">
       <h1 className="head_text text-center">
-        Hello, UserName
+        Hello, friend
         <br className="max-md:hidden" />
         <span className="orange_gradient text-center">Write your tasks</span>
       </h1>

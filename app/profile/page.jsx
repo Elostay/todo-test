@@ -21,7 +21,7 @@ const MyProfile = () => {
     };
 
     if (session?.user.id) fetchTasks();
-  }, []);
+  }, [session?.user.id]);
 
   const handleEdit = (task) => {
     router.push(`/update-task?id=${task._id}`);
