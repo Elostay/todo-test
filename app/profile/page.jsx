@@ -5,27 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-// import TodoItem from "@components/TodoItem";
 import TodoList from "@components/TodoList";
-
-// const TodoList = ({ data, handleDone, handleEdit, handleDelete }) => {
-//   return (
-//     <>
-//       <div className="mt-10 task_layout">
-//         {data.map((task) => (
-//           <TodoItem
-//             key={task._id}
-//             task={task}
-//             session
-//             handleEdit={() => handleEdit && handleEdit(task)}
-//             handleDelete={() => handleDelete && handleDelete(task)}
-//             handleDone={() => handleDelete && handleDone(task)}
-//           />
-//         ))}
-//       </div>
-//     </>
-//   );
-// };
 
 const Profile = () => {
   const router = useRouter();
@@ -60,7 +40,7 @@ const Profile = () => {
     }
   };
   const handleEdit = (task) => {
-    router.push(`/update-task?id=${task._id}`);
+    router.push(`/update-task/${task._id}`);
   };
   const handleDelete = async (task) => {
     const hasConfirmed = confirm("Are you sure you want to delete this task?");

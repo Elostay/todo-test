@@ -1,19 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
+import { useRouter } from "next/navigation";
 
 import Form from "@components/Form";
 
-const SuspenseBoundary = ({ children }) => (
-  <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-);
-
-const EditTask = () => {
+const EditTask = ({ params: { taskId } }) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const taskId = searchParams.get("id");
 
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
@@ -60,15 +53,13 @@ const EditTask = () => {
   };
 
   return (
-    <SuspenseBoundary>
-      <Form
-        type="Edit"
-        task={post}
-        setTask={setPost}
-        submitting={submitting}
-        handleSubmit={updateTask}
-      />
-    </SuspenseBoundary>
+    <Form
+      type="Edit"
+      task={post}
+      setTask={setPost}
+      submitting={submitting}
+      handleSubmit={updateTask}
+    />
   );
 };
 
