@@ -1,22 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import TodoItemFeed from "./TodoItemFeed";
-import FilterButtons from "./FilterButtons";
 
-const TodoList = ({ data }) => {
-  return (
-    <>
-      <div className="task_layout">
-        {data.map((task) => (
-          <TodoItemFeed key={task._id} task={task} rate={task.rate} />
-        ))}
-      </div>
-    </>
-  );
-};
+import FilterButtons from "./FilterButtons";
+import { useSession } from "next-auth/react";
+import TodoList from "./TodoList";
+
 
 const Feed = () => {
+  const { data: session } = useSession();
+
   const [tasks, setTasks] = useState([]);
   const [filteredStatus, setFilteredStatus] = useState([]);
 
@@ -94,27 +87,34 @@ const Feed = () => {
     }
   };
   return (
-    <section className="feed">
-      <form className="relative w-full flex-center">
-        <input
-          type="text"
-          placeholder="Search by a task name"
-          value={searchText}
-          onChange={handleSearchChange}
-          required
-          className="search_input peer"
-        />
-      </form>
+    <>
+      {session?.user && (
+        <section className="feed">
+          <form className="relative w-full flex-center">
+            <input
+              type="text"
+              placeholder="Search by a task name"
+              value={searchText}
+              onChange={handleSearchChange}
+              required
+              className="search_input peer"
+            />
+          </form>
 
-      <FilterButtons handleFilterBtn={handleFilterBtn} />
+          <FilterButtons handleFilterBtn={handleFilterBtn} />
 
-      {searchText ? (
-        <TodoList data={searchedResults} />
-      ) : (
-        <TodoList data={filteredStatus.length === 0 ? tasks : filteredStatus} />
+          {searchText ? (
+            <TodoList data={searchedResults} />
+          ) : (
+            <TodoList
+              data={filteredStatus.length === 0 ? tasks : filteredStatus}
+            />
+          )}
+        </section>
       )}
-    </section>
+    </>
   );
 };
 
 export default Feed;
+// {session?.user && <FilterButtons handleFilterBtn={handleFilterBtn} />}
