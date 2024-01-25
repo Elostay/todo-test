@@ -2,8 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 import Form from "@components/Form";
+
+const SuspenseBoundary = ({ children }) => (
+  <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+);
 
 const EditTask = () => {
   const router = useRouter();
@@ -55,13 +60,15 @@ const EditTask = () => {
   };
 
   return (
-    <Form
-      type="Edit"
-      task={post}
-      setTask={setPost}
-      submitting={submitting}
-      handleSubmit={updateTask}
-    />
+    <SuspenseBoundary>
+      <Form
+        type="Edit"
+        task={post}
+        setTask={setPost}
+        submitting={submitting}
+        handleSubmit={updateTask}
+      />
+    </SuspenseBoundary>
   );
 };
 
