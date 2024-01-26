@@ -39,9 +39,11 @@ const Profile = () => {
       console.log(error);
     }
   };
+
   const handleEdit = (task) => {
     router.push(`/update-task/${task._id}`);
   };
+
   const handleDelete = async (task) => {
     const hasConfirmed = confirm("Are you sure you want to delete this task?");
 
@@ -60,21 +62,25 @@ const Profile = () => {
   };
 
   return (
-    <section className="w-full">
-      <h1 className="head_text text-left">
-        <span className="blue_gradient">My Profile</span>
-      </h1>
-      <p className="desc text-left">
-        Welcome to your personalized profile page
-      </p>
-      <TodoList
-        data={tasks}
-        handleDone={handleDone}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
-        profile
-      />
-    </section>
+    <>
+      {session?.user && (
+        <section className="w-full">
+          <h1 className="head_text text-left">
+            <span className="blue_gradient">My Profile</span>
+          </h1>
+          <p className="desc text-left">
+            Welcome to your personalized profile page
+          </p>
+          <TodoList
+            data={tasks}
+            handleDone={handleDone}
+            handleEdit={handleEdit}
+            handleDelete={handleDelete}
+            profile
+          />
+        </section>
+      )}
+    </>
   );
 };
 

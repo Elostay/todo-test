@@ -42,13 +42,17 @@ const CreateTask = () => {
   };
 
   return (
-    <Form
-      type="Create"
-      task={post}
-      setTask={setPost}
-      submitting={submitting}
-      handleSubmit={createTask}
-    />
+    <>
+      {session?.user && (
+        <Form
+          type="Create"
+          task={post}
+          setTask={setPost}
+          submitting={submitting}
+          handleSubmit={createTask}
+        />
+      )}
+    </>
   );
 };
 

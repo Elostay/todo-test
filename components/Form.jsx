@@ -45,6 +45,7 @@ const Form = ({ type, task, setTask, submitting, handleSubmit }) => {
     }
     return optionClasses.join(" ");
   };
+
   return (
     <section className="w-full max-w-full flex-start flex-col">
       <h1 className="head_text text-left">
@@ -73,7 +74,8 @@ const Form = ({ type, task, setTask, submitting, handleSubmit }) => {
           />
         </label>
 
-        <div className="flex gap-3 mt-1 ">
+        <div className="flex gap-3 mt-1 items-center font-satoshi font-semibold">
+          Choose rating
           {buttons.map(({ color, value }, idx) => (
             <button
               key={idx}

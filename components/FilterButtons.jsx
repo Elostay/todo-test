@@ -1,4 +1,4 @@
-const FilterButtons = ({ data, handleFilterBtn, activeBtn }) => {
+const FilterButtons = ({ handleFilterBtn, activeBtn }) => {
   const buttons = [
     {
       value: "all",

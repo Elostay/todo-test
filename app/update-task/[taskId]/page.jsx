@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import Form from "@components/Form";
+import { useSession } from "next-auth/react";
 
 const EditTask = ({ params: { taskId } }) => {
   const router = useRouter();
-
+  const { data: session } = useSession();
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
     task: "",
@@ -53,13 +54,17 @@ const EditTask = ({ params: { taskId } }) => {
   };
 
   return (
-    <Form
-      type="Edit"
-      task={post}
-      setTask={setPost}
-      submitting={submitting}
-      handleSubmit={updateTask}
-    />
+    <>
+      {session?.user && (
+        <Form
+          type="Edit"
+          task={post}
+          setTask={setPost}
+          submitting={submitting}
+          handleSubmit={updateTask}
+        />
+      )}
+    </>
   );
 };
 
