@@ -74,9 +74,11 @@ const Feed = () => {
         searchText !== "" && ascending
           ? searchedResults.sort((a, b) => a.rate - b.rate)
           : searchedResults.sort((a, b) => b.rate - a.rate);
+
         ascending && tasks.length !== 0
           ? tasks.sort((a, b) => a.rate - b.rate)
           : tasks.sort((a, b) => b.rate - a.rate);
+
         ascending && filteredStatus.length !== 0
           ? filteredStatus.sort((a, b) => a.rate - b.rate)
           : filteredStatus.sort((a, b) => b.rate - a.rate);
