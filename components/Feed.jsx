@@ -89,6 +89,7 @@ const Feed = () => {
         break;
     }
   };
+
   return (
     <>
       {session?.user && (
