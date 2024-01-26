@@ -21,6 +21,7 @@ const Feed = () => {
 
   const fetchTasks = async () => {
     const response = await fetch("/api/task");
+
     const data = await response.json();
 
     setTasks(data);
