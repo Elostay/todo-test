@@ -20,7 +20,7 @@ const Feed = () => {
   const [searchedResults, setSearchedResults] = useState([]);
 
   const fetchTasks = async () => {
-    const response = await fetch(`/api/users/${session?.user.id}/tasks`);
+    const response = await fetch("/api/task");
     const data = await response.json();
 
     setTasks(data);
